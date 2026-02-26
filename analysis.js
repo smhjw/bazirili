@@ -40,8 +40,15 @@ const deepButtons = document.querySelectorAll(".tool-btn");
 const evidenceList = document.getElementById("evidenceList");
 const reliabilityBadge = document.getElementById("reliabilityBadge");
 const reliabilityMeter = document.getElementById("reliabilityMeter");
+const deepModal = document.getElementById("deepModal");
+const deepModalClose = document.getElementById("deepModalClose");
+const deepModalKicker = document.getElementById("deepModalKicker");
+const deepModalTitle = document.getElementById("deepModalTitle");
+const deepModalContent = document.getElementById("deepModalContent");
 
 const activityLogs = [];
+let deepModalBound = false;
+let deepModalLastFocus = null;
 
 function hashText(text) {
   let h = 0;
@@ -206,6 +213,13 @@ function renderDashboard() {
   logActivity(`已更新分析结果（${nameInput.value || "用户"}，${cityInput.value}）`);
 }
 
+function getProfileSeed() {
+  const y = yearInput.value || "1995";
+  const m = monthInput.value || "08";
+  const d = dayInput.value || "15";
+  return hashText(`${nameInput.value}|${y}-${m}-${d}|${timeInput.value}|${cityInput.value}`);
+}
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const err = validateDateParts(yearInput.value, monthInput.value, dayInput.value);
@@ -267,18 +281,291 @@ function bindTools() {
   });
 }
 
-function bindDeepActions() {
-  const mapping = {
-    ai: "AI 建议：今天适合做结构化拆解与阶段汇报。",
-    life: "人生主题：减少比较，优先建设自己的节奏系统。",
-    date: "择日建议：明后两天更适合签约与沟通。",
-    tarot: "塔罗提示：抽到“节制”，核心是平衡投入与恢复。"
+function setupDeepModalEvents() {
+  if (deepModalBound || !deepModal) return;
+  deepModalBound = true;
+
+  deepModalClose?.addEventListener("click", closeDeepModal);
+  deepModal.querySelectorAll("[data-deep-close]").forEach((el) => {
+    el.addEventListener("click", closeDeepModal);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && deepModal.classList.contains("open")) closeDeepModal();
+  });
+}
+
+function openDeepModal(kicker, title) {
+  if (!deepModal || !deepModalContent || !deepModalKicker || !deepModalTitle) return;
+  deepModalLastFocus = document.activeElement;
+  deepModalKicker.textContent = kicker;
+  deepModalTitle.textContent = title;
+  deepModalContent.innerHTML = "";
+  deepModal.classList.add("open");
+  deepModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDeepModal() {
+  if (!deepModal) return;
+  deepModal.classList.remove("open");
+  deepModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  if (deepModalLastFocus && typeof deepModalLastFocus.focus === "function") {
+    deepModalLastFocus.focus();
+  }
+}
+
+function toDateInputValue(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function addDays(baseDate, days) {
+  const d = new Date(baseDate);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function renderDateAnalyzer(container) {
+  const tomorrow = addDays(new Date(), 1);
+  container.innerHTML = `
+    <p class="sub">选择事项类型与起始日期，系统会生成未来 7 天可执行窗口，并给出最佳行动日。</p>
+    <div class="deep-feature-form">
+      <label>事项类型
+        <select class="deep-input" id="dateGoalInput">
+          <option value="签约合作">签约合作</option>
+          <option value="面试沟通">面试沟通</option>
+          <option value="关系推进">关系推进</option>
+          <option value="出行安排">出行安排</option>
+          <option value="发布上线">发布上线</option>
+        </select>
+      </label>
+      <label>起始日期
+        <input class="deep-input" id="dateStartInput" type="date" value="${toDateInputValue(tomorrow)}" />
+      </label>
+      <div class="deep-actions">
+        <button type="button" class="deep-btn primary" id="dateGenerateBtn">生成 7 日窗口</button>
+        <button type="button" class="deep-btn" id="dateApplyBtn" disabled>应用最佳建议</button>
+      </div>
+    </div>
+    <div id="dateBestBox" class="date-best">尚未生成择日结果。</div>
+    <ul id="dateList" class="date-list"></ul>
+  `;
+
+  const goalInput = container.querySelector("#dateGoalInput");
+  const startInput = container.querySelector("#dateStartInput");
+  const generateBtn = container.querySelector("#dateGenerateBtn");
+  const applyBtn = container.querySelector("#dateApplyBtn");
+  const bestBox = container.querySelector("#dateBestBox");
+  const dateList = container.querySelector("#dateList");
+
+  const goalTips = {
+    签约合作: "优先上午 09:00-11:00，先确认边界再落条款。",
+    面试沟通: "先讲结果再讲过程，末尾补充可落地计划。",
+    关系推进: "以轻量沟通为主，避免一次性抛出全部诉求。",
+    出行安排: "预留 20% 缓冲时间，减少跨城临时变更。",
+    发布上线: "先小范围灰度，再逐步放量观察反馈。"
   };
+  const weekday = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  let bestItem = null;
+
+  function generate() {
+    const goal = goalInput.value;
+    const startDate = new Date(`${startInput.value}T00:00:00`);
+    if (Number.isNaN(startDate.getTime())) {
+      bestBox.textContent = "请选择有效起始日期。";
+      return;
+    }
+
+    const baseSeed = getProfileSeed() ^ hashText(goal);
+    const goalBias = { 签约合作: 8, 面试沟通: 6, 关系推进: 5, 出行安排: 4, 发布上线: 7 };
+    const rows = [];
+
+    for (let i = 0; i < 7; i += 1) {
+      const date = addDays(startDate, i);
+      const key = `${baseSeed}|${goal}|${toDateInputValue(date)}`;
+      let score = 56 + (hashText(key) % 36) + (goalBias[goal] || 0);
+      if (date.getDay() === 2 || date.getDay() === 4) score += 3;
+      if (date.getDay() === 0) score -= 4;
+      score = Math.max(52, Math.min(96, score));
+
+      rows.push({
+        date,
+        score,
+        iso: toDateInputValue(date),
+        label: `${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${weekday[date.getDay()]}`,
+        tag: score >= 82 ? "强推" : score >= 70 ? "可行" : "观望"
+      });
+    }
+
+    bestItem = [...rows].sort((a, b) => b.score - a.score)[0];
+    bestBox.innerHTML = `<b>最佳窗口：${bestItem.label}（${bestItem.score} 分）</b><div class="sub">${goalTips[goal]}</div>`;
+    dateList.innerHTML = rows
+      .map(
+        (row) => `
+          <li>
+            <div class="date-meta">
+              <b>${row.label}</b>
+              <span>${goal} · 建议：${row.tag}</span>
+            </div>
+            <span class="date-score">${row.score}</span>
+          </li>
+        `
+      )
+      .join("");
+    applyBtn.disabled = false;
+    logActivity(`已生成择日窗口：${goal}`);
+  }
+
+  generateBtn.addEventListener("click", generate);
+  applyBtn.addEventListener("click", () => {
+    if (!bestItem) return;
+    adviceBox.textContent = `择日建议：${bestItem.label}（${bestItem.score} 分）优先推进关键事项。`;
+    logActivity(`已应用择日建议：${bestItem.label}`);
+    closeDeepModal();
+  });
+
+  generate();
+}
+
+function renderTarotAnalyzer(container) {
+  const deck = [
+    {
+      name: "节制",
+      keywords: "平衡 / 协调 / 节奏",
+      upright: "先统一节奏，再提高输出，今天最怕“用力过猛”。",
+      reversed: "别同时开太多战线，先收口两个核心任务。"
+    },
+    {
+      name: "战车",
+      keywords: "推进 / 控制 / 执行",
+      upright: "你适合主导推进，但要把决策理由写清楚再执行。",
+      reversed: "情绪会拖慢效率，先稳定情绪再开关键会。"
+    },
+    {
+      name: "星星",
+      keywords: "希望 / 复原 / 远景",
+      upright: "适合重启被搁置的计划，小步重启比一次到位更稳。",
+      reversed: "避免理想化，先做最小可行版本验证方向。"
+    },
+    {
+      name: "女祭司",
+      keywords: "直觉 / 信息 / 观察",
+      upright: "先听后说，你会在细节里拿到关键线索。",
+      reversed: "信息还不完整，别急着承诺，先补证据。"
+    },
+    {
+      name: "太阳",
+      keywords: "显化 / 清晰 / 成果",
+      upright: "适合公开表达与展示成果，今天利正面沟通。",
+      reversed: "别过度乐观，关键节点需要二次确认。"
+    },
+    {
+      name: "力量",
+      keywords: "韧性 / 稳定 / 驯化",
+      upright: "用稳定节奏赢，不靠爆发。先做最难的一步。",
+      reversed: "阻力来自内耗，先停掉一个低收益任务。"
+    }
+  ];
+  const topicLabels = {
+    career: "事业决策",
+    relation: "关系沟通",
+    wealth: "财务规划",
+    growth: "自我成长"
+  };
+
+  container.innerHTML = `
+    <p class="sub">选择你当前最关注的议题，抽一张牌。系统将根据牌面给出可执行建议。</p>
+    <div class="tarot-layout">
+      <label>提问场景
+        <select class="deep-input" id="tarotTopicInput">
+          <option value="career">事业决策</option>
+          <option value="relation">关系沟通</option>
+          <option value="wealth">财务规划</option>
+          <option value="growth">自我成长</option>
+        </select>
+      </label>
+      <div class="deep-actions">
+        <button type="button" class="deep-btn primary" id="tarotDrawBtn">抽一张牌</button>
+        <button type="button" class="deep-btn" id="tarotApplyBtn" disabled>应用牌面建议</button>
+      </div>
+      <div class="tarot-stage">
+        <div class="tarot-card" id="tarotCard">
+          <div class="tarot-face tarot-back">TAROT READING</div>
+          <div class="tarot-face tarot-front">
+            <p id="tarotState" class="tarot-tag">等待抽牌</p>
+            <h4 id="tarotName" class="tarot-name">尚未揭示</h4>
+            <p id="tarotKeywords" class="tarot-tag">关键词：—</p>
+            <p id="tarotAdvice" class="tarot-tip">点击“抽一张牌”开始。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const topicInput = container.querySelector("#tarotTopicInput");
+  const drawBtn = container.querySelector("#tarotDrawBtn");
+  const applyBtn = container.querySelector("#tarotApplyBtn");
+  const tarotCard = container.querySelector("#tarotCard");
+  const tarotState = container.querySelector("#tarotState");
+  const tarotName = container.querySelector("#tarotName");
+  const tarotKeywords = container.querySelector("#tarotKeywords");
+  const tarotAdvice = container.querySelector("#tarotAdvice");
+
+  let latestAdvice = "";
+  let drawTimes = 0;
+
+  drawBtn.addEventListener("click", () => {
+    drawTimes += 1;
+    const topic = topicInput.value;
+    const drawSeed = hashText(`${getProfileSeed()}|${topic}|${Date.now()}|${drawTimes}`);
+    const card = deck[drawSeed % deck.length];
+    const isReversed = ((drawSeed >> 3) % 3) === 0;
+    const baseAdvice = isReversed ? card.reversed : card.upright;
+    latestAdvice = `${topicLabels[topic]}：${baseAdvice}`;
+
+    drawBtn.disabled = true;
+    tarotCard.classList.remove("revealed");
+    tarotCard.classList.add("drawing");
+
+    setTimeout(() => {
+      tarotCard.classList.remove("drawing");
+      tarotCard.classList.add("revealed");
+      tarotState.textContent = isReversed ? "逆位" : "正位";
+      tarotName.textContent = card.name;
+      tarotKeywords.textContent = `关键词：${card.keywords}`;
+      tarotAdvice.textContent = latestAdvice;
+      applyBtn.disabled = false;
+      drawBtn.disabled = false;
+      logActivity(`已完成塔罗抽牌：${card.name}${isReversed ? "（逆位）" : "（正位）"}`);
+    }, 420);
+  });
+
+  applyBtn.addEventListener("click", () => {
+    if (!latestAdvice) return;
+    adviceBox.textContent = `塔罗建议：${latestAdvice}`;
+    logActivity("已应用塔罗建议到今日结论");
+    closeDeepModal();
+  });
+}
+
+function bindDeepActions() {
+  setupDeepModalEvents();
   deepButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const key = btn.dataset.deep;
-      adviceBox.textContent = mapping[key] || adviceBox.textContent;
-      logActivity(`已执行深度分析：${btn.textContent}`);
+      if (key === "date") {
+        openDeepModal("DEEP ANALYSIS", "择日行动窗口");
+        renderDateAnalyzer(deepModalContent);
+        logActivity("已打开深度分析：择日");
+      }
+      if (key === "tarot") {
+        openDeepModal("DEEP ANALYSIS", "塔罗行动建议");
+        renderTarotAnalyzer(deepModalContent);
+        logActivity("已打开深度分析：塔罗");
+      }
     });
   });
 }

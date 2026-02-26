@@ -119,10 +119,14 @@
       </section>
       <section class="panel panel-story tools-card">
         <h4>深度分析</h4>
-        <button class="tool-btn" data-deep="ai">AI 命理咨询</button>
-        <button class="tool-btn" data-deep="life">人生大问题</button>
-        <button class="tool-btn" data-deep="date">择日</button>
-        <button class="tool-btn" data-deep="tarot">塔罗</button>
+        <button class="tool-btn" type="button" data-deep="date">
+          <span>择日</span>
+          <small>生成未来 7 日行动窗口</small>
+        </button>
+        <button class="tool-btn" type="button" data-deep="tarot">
+          <span>塔罗</span>
+          <small>抽牌并给出场景化建议</small>
+        </button>
       </section>
       <section class="panel panel-data explain-note">
         <h4>透明说明</h4>
@@ -131,6 +135,17 @@
       <button class="btn big-cta" id="genReportBtn" type="button">生成日报</button>
     </aside>
   </main>
+
+  <div id="deepModal" class="deep-modal" aria-hidden="true">
+    <div class="deep-modal-backdrop" data-deep-close></div>
+    <section class="deep-modal-card panel panel-story" role="dialog" aria-modal="true" aria-labelledby="deepModalTitle">
+      <button id="deepModalClose" class="deep-modal-close" type="button" aria-label="关闭">×</button>
+      <p id="deepModalKicker" class="deep-modal-kicker"></p>
+      <h3 id="deepModalTitle" class="deep-modal-title"></h3>
+      <div id="deepModalContent" class="deep-modal-content"></div>
+    </section>
+  </div>
+
   <footer class="shell page-footer">© 2026 命运日历 · 免费核心功能，持续更新。</footer>
 
   <script src="ui.js"></script>
