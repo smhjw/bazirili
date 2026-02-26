@@ -653,6 +653,130 @@ body.ready [data-reveal].visible {
   transform: translateY(-4px);
 }
 
+.blog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 16px;
+  align-items: start;
+}
+
+.blog-main {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.blog-main-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.article-card {
+  min-width: 0;
+}
+
+.article-card h3 {
+  margin: 8px 0 8px;
+  line-height: 1.45;
+}
+
+.article-card p {
+  margin: 0;
+  color: #aec1e2;
+  line-height: 1.8;
+}
+
+.article-featured {
+  padding: 22px;
+}
+
+.article-featured h3 {
+  font-size: clamp(24px, 2.6vw, 32px);
+}
+
+.article-meta {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #9eb6de;
+}
+
+.source-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(123, 193, 245, 0.36);
+  background: rgba(46, 92, 132, 0.38);
+  color: #d8edff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  margin-right: 6px;
+}
+
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: #ffd198;
+  font-weight: 700;
+  font-size: 14px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.read-link::after {
+  content: "↗";
+  font-size: 13px;
+  opacity: 0.84;
+}
+
+.read-link:hover {
+  color: #ffe4bf;
+  transform: translateX(1px);
+}
+
+.blog-side {
+  display: grid;
+  gap: 14px;
+  position: sticky;
+  top: 92px;
+}
+
+.donate-card h3 {
+  margin: 0 0 6px;
+}
+
+.donate-card p {
+  margin: 0;
+  color: #b7c9e8;
+  line-height: 1.75;
+}
+
+.qr-wrap {
+  margin: 12px 0 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.donate-card small {
+  display: block;
+  color: #c9d9f2;
+  letter-spacing: 0.03em;
+}
+
+.source-note-card h4 {
+  margin: 0 0 8px;
+}
+
+.source-note-card p {
+  margin: 0;
+  color: #b4c7e8;
+  line-height: 1.75;
+}
+
 .site-footer {
   margin-top: 24px;
   padding-top: 24px;
@@ -1248,6 +1372,18 @@ select {
   .method-grid,
   .footer-cols {
     grid-template-columns: 1fr;
+  }
+
+  .blog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-side {
+    position: static;
   }
 
   .pill-row {
