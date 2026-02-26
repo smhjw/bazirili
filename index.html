@@ -6,7 +6,7 @@
   <title>命运日历 | 首页</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -30,7 +30,7 @@
 
   <main>
     <section class="hero shell">
-      <div class="hero-left">
+      <div class="hero-left" data-reveal>
         <p class="rating-pill">⭐ 4.9 ｜ 12,847 位用户的信赖</p>
         <h1>以千年命理智慧<br><span>导航人生</span><br>每一个重要决策</h1>
         <p class="hero-desc">结合传统命理逻辑与 AI 生成建议，提供更容易执行的每日行动方案。</p>
@@ -40,43 +40,84 @@
           <li>30 秒出结果</li>
           <li>无广告干扰</li>
         </ul>
+        <div class="hero-kpis">
+          <div class="hero-kpi"><b>330+</b><span>城市经度校准</span></div>
+          <div class="hero-kpi"><b>6</b><span>核心维度评分</span></div>
+          <div class="hero-kpi"><b>10年</b><span>趋势窗口</span></div>
+        </div>
       </div>
 
-      <aside class="hero-card" id="dailyCard">
-        <div class="card-head">
-          <div>
-            <p class="mini-label">今日</p>
-            <p class="date" id="todayDate"></p>
+      <div class="hero-aside" data-reveal>
+        <aside class="hero-card panel panel-data" id="dailyCard">
+          <div class="card-head">
+            <div>
+              <p class="mini-label">今日</p>
+              <p class="date" id="todayDate"></p>
+            </div>
+            <span class="tag">运势更新</span>
           </div>
-          <span class="tag">运势更新</span>
-        </div>
-        <div class="radar-wrap">
-          <svg id="radarSvg" viewBox="0 0 240 220" aria-hidden="true"></svg>
-          <div class="score"><b id="totalScore">78</b><small>综合分</small></div>
-        </div>
-        <div class="metrics" id="metrics"></div>
-        <div class="topic" id="topicText"></div>
-      </aside>
-    </section>
+          <div class="radar-wrap">
+            <svg id="radarSvg" viewBox="0 0 240 220" aria-hidden="true"></svg>
+            <div class="score"><b id="totalScore">78</b><small>综合分</small></div>
+          </div>
+          <div class="metrics" id="metrics"></div>
+          <div class="topic" id="topicText"></div>
+        </aside>
 
-    <section class="analysis shell" id="analysis">
-      <div class="panel">
-        <div class="section-title">
-          <h2>八字分析演示</h2>
-          <p>已升级为独立分析页，支持三栏仪表盘与精细日期校验。</p>
-        </div>
-        <a class="btn btn-primary btn-xl" href="analysis.html">进入免费分析页</a>
+        <article class="panel panel-story signal-timeline">
+          <h3>今日节奏窗口</h3>
+          <p class="sub">把一天拆成 3 段，降低决策波动。</p>
+          <ul>
+            <li><span>08:00-11:00</span><p>信息收集与优先级排序，避免直接拍板。</p></li>
+            <li><span>14:00-17:00</span><p>推进关键沟通，适合对齐目标与分工。</p></li>
+            <li><span>20:00-22:00</span><p>复盘与修正，保留 20 分钟写明日计划。</p></li>
+          </ul>
+        </article>
       </div>
     </section>
 
-    <section class="shell info-grid section">
-      <article class="panel mini-card"><h3>每日运势</h3><p>根据时间与地点生成节奏建议，适合日常规划。</p></article>
-      <article class="panel mini-card"><h3>流年趋势</h3><p>模拟未来十年波动，帮助把握长期阶段。</p></article>
-      <article class="panel mini-card"><h3>真太阳时</h3><p>按城市经度修正，提升时刻解释精度。</p></article>
+    <section class="analysis shell" id="analysis" data-reveal>
+      <div class="panel panel-action">
+        <div class="section-title">
+          <h2>三栏分析仪表盘</h2>
+          <p>输入出生信息后，实时生成六维评分、八字详情、分析日志与依据解释。</p>
+        </div>
+        <div class="action-row">
+          <a class="btn btn-primary btn-xl" href="analysis.html">进入免费分析页</a>
+          <p class="action-tip">演示版为本地规则引擎，不上传个人信息。</p>
+        </div>
+      </div>
     </section>
 
-    <section class="shell section cta-band">
-      <div class="panel cta-panel">
+    <section class="shell info-grid section" data-reveal>
+      <article class="panel panel-data mini-card"><h3>每日运势</h3><p>根据时间与地点生成节奏建议，适合日常规划。</p></article>
+      <article class="panel panel-story mini-card"><h3>流年趋势</h3><p>模拟未来十年波动，帮助把握长期阶段。</p></article>
+      <article class="panel panel-action mini-card"><h3>真太阳时</h3><p>按城市经度修正，提升时刻解释精度。</p></article>
+    </section>
+
+    <section class="shell section trust-section" data-reveal>
+      <div class="section-title">
+        <h2>结果为什么可信</h2>
+        <p>我们公开演示版的输入、计算、输出链路，让你看到建议来源。</p>
+      </div>
+      <div class="trust-grid">
+        <article class="panel panel-data trust-card">
+          <h3>输入层</h3>
+          <p>出生日期、时刻、城市经度三类参数共同决定当天评分。</p>
+        </article>
+        <article class="panel panel-story trust-card">
+          <h3>规则层</h3>
+          <p>六维评分 + 真太阳时修正 + 主题建议，采用可复现的确定性规则。</p>
+        </article>
+        <article class="panel panel-action trust-card">
+          <h3>输出层</h3>
+          <p>输出不止“分数”，还包含优势维度、风险维度和可执行动作建议。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section cta-band" data-reveal>
+      <div class="panel panel-action cta-panel">
         <h2>准备好探索你的人生路径了吗？</h2>
         <p>加入更多用户，用更清晰的行动建议替代焦虑与内耗。</p>
         <a class="btn btn-primary btn-xl" href="analysis.html">开始免费分析</a>
@@ -85,7 +126,7 @@
   </main>
   <footer class="shell page-footer">© 2026 命运日历 · 每日运势与长期趋势并重。</footer>
 
+  <script src="ui.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
-

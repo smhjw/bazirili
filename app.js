@@ -41,7 +41,10 @@ function scoreSet(seed) {
 }
 
 function renderMetrics(target, scores) {
-  target.innerHTML = DIMENSIONS.map((name, i) => `<div class="metric"><b>${scores[i]}</b><span>${name}</span></div>`).join("");
+  target.innerHTML = DIMENSIONS.map((name, i) => {
+    const tone = scores[i] >= 80 ? "高势" : scores[i] >= 68 ? "平稳" : "谨慎";
+    return `<div class="metric"><b>${scores[i]}</b><span>${name} · ${tone}</span></div>`;
+  }).join("");
 }
 
 function radarPoints(values) {
@@ -61,15 +64,15 @@ function drawRadar(values) {
       const a = (-90 + i * 60) * Math.PI / 180;
       return `${(120 + Math.cos(a) * r).toFixed(1)},${(110 + Math.sin(a) * r).toFixed(1)}`;
     }).join(" ");
-    return `<polygon points="${pts}" fill="none" stroke="rgba(132,157,222,0.2)" />`;
+    return `<polygon points="${pts}" fill="none" stroke="rgba(176, 197, 235, 0.22)" />`;
   }).join("");
 
   const rays = DIMENSIONS.map((_, i) => {
     const a = (-90 + i * 60) * Math.PI / 180;
-    return `<line x1="120" y1="110" x2="${(120 + Math.cos(a) * 72).toFixed(1)}" y2="${(110 + Math.sin(a) * 72).toFixed(1)}" stroke="rgba(132,157,222,0.2)"/>`;
+    return `<line x1="120" y1="110" x2="${(120 + Math.cos(a) * 72).toFixed(1)}" y2="${(110 + Math.sin(a) * 72).toFixed(1)}" stroke="rgba(176, 197, 235, 0.2)"/>`;
   }).join("");
 
-  const data = `<polygon points="${radarPoints(values)}" fill="rgba(127,97,255,0.35)" stroke="#8e6dff" stroke-width="2"/>`;
+  const data = `<polygon points="${radarPoints(values)}" fill="rgba(241, 180, 87, 0.24)" stroke="#f1b457" stroke-width="2"/>`;
   radarSvg.innerHTML = `${rings}${rays}${data}`;
 }
 
@@ -91,6 +94,7 @@ function aiSummary(name, scores, city) {
 }
 
 function renderDaily() {
+  if (!todayDate || !totalScoreEl || !metricsEl || !topicTextEl || !radarSvg) return;
   const seed = hashText(new Date().toISOString().slice(0, 10));
   const scores = scoreSet(seed);
   const total = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
@@ -125,6 +129,7 @@ if (analysisForm && analysisResult) {
       <div class="metrics">${metrics}</div>
       <p class="sub">真太阳时修正：${solarOffset(city)} 分钟（城市：${city}）</p>
       <p style="line-height:1.8;color:#c9d9f4">${aiSummary(name, scores, city)}</p>
+      <p class="sub">依据链路：输入参数 → 六维映射 → 建议生成（演示规则引擎）</p>
       <h4>10 年流年趋势</h4>
       <div class="inline-trend">${bars}</div>
     `;

@@ -6,7 +6,7 @@
   <title>命运日历 | 功能</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -25,32 +25,54 @@
   </header>
 
   <main class="shell sub-page">
-    <section class="page-hero"><p class="crumb">首页 › 功能详情</p><h1>功能详解</h1><p>探索核心能力：每日运势、流年趋势、AI 解释与真太阳时校准。</p></section>
+    <section class="page-hero" data-reveal>
+      <p class="crumb">首页 › 功能详情</p>
+      <h1>功能详解</h1>
+      <p>探索核心能力：每日运势、流年趋势、AI 解释与真太阳时校准。</p>
+    </section>
 
-    <section>
-      <h2>核心能力</h2>
+    <section class="feature-showcase" data-reveal>
+      <article class="panel panel-story feature-lead">
+        <h2>从“知道结果”到“知道为什么”</h2>
+        <p>我们把分析拆成输入、规则、建议三层结构，不只告诉你分数，更告诉你当天应该怎么行动。</p>
+      </article>
       <div class="feature-grid">
-        <article class="panel feature-item"><h3>每日运势</h3><p>生成当日六维评分与行动建议。</p></article>
-        <article class="panel feature-item"><h3>流年趋势</h3><p>查看未来十年的波动区间，提前规划。</p></article>
-        <article class="panel feature-item"><h3>AI 命理解读</h3><p>把复杂命理信息转为可读文字建议。</p></article>
+        <article class="panel panel-data feature-item"><h3>每日运势</h3><p>生成当日六维评分与行动建议。</p></article>
+        <article class="panel panel-story feature-item"><h3>流年趋势</h3><p>查看未来十年的波动区间，提前规划。</p></article>
+        <article class="panel panel-action feature-item"><h3>AI 命理解读</h3><p>把复杂命理信息转为可读文字建议。</p></article>
       </div>
     </section>
 
-    <section class="band">
+    <section class="band panel panel-data" data-reveal>
       <h2>六大维度</h2>
       <p class="sub">事业、财运、桃花、健康、学业、出行六个维度给出评分与倾向。</p>
       <div class="metrics" id="dimensionGrid"></div>
     </section>
 
-    <section class="band">
+    <section class="band panel panel-action" data-reveal>
       <h2>流年趋势演示</h2>
-      <p class="sub">演示版趋势图用于观察阶段走势。</p>
+      <p class="sub">演示版趋势图用于观察阶段走势，支持滚动动画展示。</p>
       <div id="trendBars" class="trend-bars"></div>
+    </section>
+
+    <section class="method-grid" data-reveal>
+      <article class="panel panel-data method-card">
+        <h3>1. 数据输入</h3>
+        <p>采集出生日期、时刻和城市，并进行基础合法性校验。</p>
+      </article>
+      <article class="panel panel-story method-card">
+        <h3>2. 规则推导</h3>
+        <p>结合真太阳时修正与六维映射，生成结构化分析结果。</p>
+      </article>
+      <article class="panel panel-action method-card">
+        <h3>3. 行动建议</h3>
+        <p>输出“优先维度 + 风险维度 + 执行建议”，便于当天落地。</p>
+      </article>
     </section>
   </main>
   <footer class="shell page-footer">© 2026 命运日历 · 功能持续迭代中。</footer>
 
+  <script src="ui.js"></script>
   <script src="features.js"></script>
 </body>
 </html>
-

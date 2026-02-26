@@ -6,7 +6,7 @@
   <title>命运日历 | 免费分析</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -29,8 +29,8 @@
   </header>
 
   <main class="analysis-dashboard shell">
-    <aside class="dash-left">
-      <section class="panel profile-card">
+    <aside class="dash-left" data-reveal>
+      <section class="panel panel-data profile-card">
         <h3>个人档案</h3>
         <form id="profileForm">
           <label>姓名<input id="pName" type="text" value="张三" required /></label>
@@ -50,44 +50,55 @@
           <p id="dateError" class="field-error"></p>
         </form>
       </section>
-      <section class="panel mini-calendar">
+      <section class="panel panel-story mini-calendar">
         <div class="cal-head"><b id="calMonthText"></b></div>
         <div id="calGrid" class="cal-grid"></div>
       </section>
     </aside>
 
-    <section class="dash-main">
+    <section class="dash-main" data-reveal>
       <div class="dash-title-row">
         <h2 id="helloText">张三，今日如何？</h2>
         <div class="date-dot" id="todayDot"></div>
       </div>
       <div class="overview-strip" id="overviewStrip"></div>
 
-      <article class="panel vibe-panel">
+      <article class="panel panel-action vibe-panel">
         <div class="vibe-head"><span>TODAY'S VIBE</span><b id="vibeScore">63</b></div>
         <h3 id="vibeTitle">稳刚</h3>
         <p id="vibeDesc">今日比拼耐心，节奏稳则输出更稳。</p>
         <div id="adviceBox" class="advice-box">今日宜“先对齐预期，再推进执行”。</div>
       </article>
 
-      <article class="panel bazi-panel">
+      <article class="panel panel-data bazi-panel">
         <h3>八字详情</h3>
         <div class="pill-row" id="pillarRow"></div>
       </article>
 
-      <article class="panel metrics-list" id="metricList"></article>
-      <article class="panel activity-panel">
+      <article class="panel panel-data metrics-list" id="metricList"></article>
+
+      <article class="panel panel-story evidence-panel">
+        <div class="evidence-head">
+          <h3>解释依据</h3>
+          <span id="reliabilityBadge">可信度 82%</span>
+        </div>
+        <div class="reliability-track"><span id="reliabilityMeter"></span></div>
+        <ul id="evidenceList" class="evidence-list"></ul>
+        <p class="sub">演示版采用确定性规则生成，不上传个人信息，仅在本地浏览器运行。</p>
+      </article>
+
+      <article class="panel panel-data activity-panel">
         <h3>分析日志</h3>
         <ul id="activityFeed" class="activity-feed"></ul>
       </article>
     </section>
 
-    <aside class="dash-right">
-      <section class="panel progress-card">
+    <aside class="dash-right" data-reveal>
+      <section class="panel panel-action progress-card">
         <p>成就进度</p>
         <h3 id="progressText">0/12</h3>
       </section>
-      <section class="panel tools-card">
+      <section class="panel panel-data tools-card">
         <h4>今日工具</h4>
         <div class="tool-tags">
           <button type="button" class="tool-chip" data-tool="checkin">每日签到</button>
@@ -96,18 +107,23 @@
           <button type="button" class="tool-chip" data-tool="classroom">八字学堂</button>
         </div>
       </section>
-      <section class="panel tools-card">
+      <section class="panel panel-story tools-card">
         <h4>深度分析</h4>
         <button class="tool-btn" data-deep="ai">AI 命理咨询</button>
         <button class="tool-btn" data-deep="life">人生大问题</button>
         <button class="tool-btn" data-deep="date">择日</button>
         <button class="tool-btn" data-deep="tarot">塔罗</button>
       </section>
+      <section class="panel panel-data explain-note">
+        <h4>透明说明</h4>
+        <p>结果由输入参数与公开规则推导，建议用于日常规划，不替代专业判断。</p>
+      </section>
       <button class="btn big-cta" id="genReportBtn" type="button">生成日报</button>
     </aside>
   </main>
   <footer class="shell page-footer">© 2026 命运日历 · 免费核心功能，持续更新。</footer>
 
+  <script src="ui.js"></script>
   <script src="analysis.js"></script>
 </body>
 </html>

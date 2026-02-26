@@ -6,7 +6,7 @@
   <title>命运日历 | 博客</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -25,15 +25,15 @@
   </header>
 
   <main class="shell sub-page">
-    <section class="page-hero"><p class="crumb">首页 › 博客</p><h1>博客</h1><p>产品更新、命理科普与使用技巧。</p></section>
+    <section class="page-hero" data-reveal><p class="crumb">首页 › 博客</p><h1>博客</h1><p>产品更新、命理科普与使用技巧。</p></section>
 
-    <section class="blog-grid">
-      <article class="panel blog-card"><p class="blog-meta">入门 · 2025-01-15</p><h3>八字与每日运势入门</h3><p>了解如何把复杂命理结构拆成每日可执行建议。</p><a href="#">阅读全文 →</a></article>
-      <article class="panel blog-card"><p class="blog-meta">精选 · 2025-01-10</p><h3>理解真太阳时</h3><p>为什么出生时间和出生地会影响结果精度。</p><a href="#">阅读全文 →</a></article>
-      <article class="panel blog-card"><p class="blog-meta">更新 · 2025-01-05</p><h3>产品更新：2025 新功能</h3><p>AI 解读、趋势图和交互细节的本轮升级。</p><a href="#">阅读全文 →</a></article>
+    <section class="blog-grid" data-reveal>
+      <article class="panel panel-story blog-card featured"><p class="blog-meta">入门 · 2025-01-15</p><h3>八字与每日运势入门</h3><p>了解如何把复杂命理结构拆成每日可执行建议。</p><a href="#">阅读全文 →</a></article>
+      <article class="panel panel-data blog-card"><p class="blog-meta">精选 · 2025-01-10</p><h3>理解真太阳时</h3><p>为什么出生时间和出生地会影响结果精度。</p><a href="#">阅读全文 →</a></article>
+      <article class="panel panel-action blog-card"><p class="blog-meta">更新 · 2025-01-05</p><h3>产品更新：2025 新功能</h3><p>AI 解读、趋势图和交互细节的本轮升级。</p><a href="#">阅读全文 →</a></article>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer" data-reveal>
       <div class="footer-cols">
         <div><h4>命运日历</h4><p>免费八字运势查询，每日运势预测，流年趋势分析。</p></div>
         <div><h4>产品</h4><a href="index.html">今日运势</a><a href="features.html">功能详解</a></div>
@@ -45,13 +45,10 @@
         <h3>请作者喝杯咖啡</h3>
         <p>感谢你的支持，推荐使用微信支付</p>
         <img id="wechatPreview" class="qr" src="assets/wechat-qr.png" alt="微信收款码" />
-        
       </div>
     </footer>
   </main>
 
-  
+  <script src="ui.js"></script>
 </body>
 </html>
-
-

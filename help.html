@@ -6,7 +6,7 @@
   <title>命运日历 | 帮助</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -25,9 +25,9 @@
   </header>
 
   <main class="shell sub-page">
-    <section class="page-hero"><p class="crumb">首页 › 帮助中心</p><h1>帮助中心</h1><p>常见问题与使用指南，快速找到需要的信息。</p></section>
+    <section class="page-hero" data-reveal><p class="crumb">首页 › 帮助中心</p><h1>帮助中心</h1><p>常见问题与使用指南，快速找到需要的信息。</p></section>
 
-    <section class="band">
+    <section class="band panel panel-data" data-reveal>
       <h2>常见问题</h2>
       <div class="faq" id="faqList">
         <article class="faq-item open"><button class="faq-q" type="button">如何获取每日运势？</button><div class="faq-a">进入首页后点击“开始免费分析”，填写基本出生信息即可生成当天运势。</div></article>
@@ -38,14 +38,14 @@
       </div>
     </section>
 
-    <section class="notice">
+    <section class="notice panel panel-story" data-reveal>
       <h2>免责声明</h2>
       <p>平台提供的运势预测仅供娱乐与参考，不构成职业、健康、财务或法律建议。建议将其作为自我认知和规划辅助，不替代专业判断。</p>
     </section>
   </main>
   <footer class="shell page-footer">© 2026 命运日历 · 帮助中心持续完善。</footer>
 
+  <script src="ui.js"></script>
   <script src="help.js"></script>
 </body>
 </html>
-

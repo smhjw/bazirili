@@ -37,6 +37,9 @@ const activityFeed = document.getElementById("activityFeed");
 const genReportBtn = document.getElementById("genReportBtn");
 const toolChips = document.querySelectorAll(".tool-chip");
 const deepButtons = document.querySelectorAll(".tool-btn");
+const evidenceList = document.getElementById("evidenceList");
+const reliabilityBadge = document.getElementById("reliabilityBadge");
+const reliabilityMeter = document.getElementById("reliabilityMeter");
 
 const activityLogs = [];
 
@@ -99,9 +102,15 @@ function scoreSet(seed) {
   return DIMENSIONS.map((_, i) => 55 + ((seed >> (i * 3)) % 40));
 }
 
+function levelText(score) {
+  if (score >= 80) return "主动推进";
+  if (score >= 65) return "稳中求进";
+  return "先防守后进攻";
+}
+
 function renderMetrics(scores) {
   metricList.innerHTML = scores
-    .map((s, i) => `<div class="metric-row"><b>${DIMENSIONS[i]}</b><span>${s}</span><p>建议：${s >= 75 ? "主动推进" : s >= 65 ? "稳中求进" : "先防守后进攻"}</p></div>`)
+    .map((s, i) => `<div class="metric-row"><b>${DIMENSIONS[i]}</b><span>${s}</span><p>建议：${levelText(s)}</p></div>`)
     .join("");
 }
 
@@ -130,6 +139,41 @@ function renderCalendar() {
   calGrid.innerHTML = cells.join("");
 }
 
+function calcReliability(avg, city) {
+  let score = 68;
+  if (nameInput.value.trim().length >= 2) score += 4;
+  if (yearInput.value && monthInput.value && dayInput.value) score += 8;
+  if (timeInput.value) score += 6;
+  if (CITY_LONGITUDE[city]) score += 6;
+  if (avg >= 60 && avg <= 88) score += 4;
+  return Math.max(62, Math.min(95, score));
+}
+
+function renderEvidence(seed, scores, avg, city) {
+  if (!evidenceList || !reliabilityBadge || !reliabilityMeter) return;
+
+  const strongest = DIMENSIONS[scores.indexOf(Math.max(...scores))];
+  const weakest = DIMENSIONS[scores.indexOf(Math.min(...scores))];
+  const offset = Math.round((CITY_LONGITUDE[city] - 120) * 4);
+  const mode = avg >= 75 ? "积极推进" : avg >= 60 ? "稳健推进" : "保守收缩";
+  const reliability = calcReliability(avg, city);
+
+  const items = [
+    { title: "输入完整度", text: `姓名 + 出生日期 + 时间 + 城市已纳入计算，可信度 ${reliability}%` },
+    { title: "维度主导", text: `当前最强维度为 ${strongest}，最弱维度为 ${weakest}，建议主攻强项并规避短板。` },
+    { title: "城市修正", text: `出生地 ${city} 对应真太阳时修正 ${offset >= 0 ? "+" : ""}${offset} 分钟。` },
+    { title: "执行模式", text: `综合分 ${avg}，建议采用“${mode}”策略推进当天任务。` },
+    { title: "规则版本", text: `演示规则引擎 v1.2（seed: ${String(seed).slice(-6)}），结果可复现。` }
+  ];
+
+  evidenceList.innerHTML = items
+    .map((item) => `<li><b>${item.title}</b><span>${item.text}</span></li>`)
+    .join("");
+
+  reliabilityBadge.textContent = `可信度 ${reliability}%`;
+  reliabilityMeter.style.width = `${reliability}%`;
+}
+
 function renderDashboard() {
   const y = yearInput.value || "1995";
   const m = monthInput.value || "08";
@@ -138,10 +182,12 @@ function renderDashboard() {
 
   const scores = scoreSet(seed);
   const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const strongest = DIMENSIONS[scores.indexOf(Math.max(...scores))];
+
   vibeScore.textContent = String(avg);
   vibeTitle.textContent = VIBES[seed % VIBES.length];
   vibeDesc.textContent = `出生地 ${cityInput.value} 真太阳时修正约 ${Math.round((CITY_LONGITUDE[cityInput.value] - 120) * 4)} 分钟。`;
-  adviceBox.textContent = `今日建议：优先处理 ${DIMENSIONS[scores.indexOf(Math.max(...scores))]}，暂缓高风险决策。`;
+  adviceBox.textContent = `今日建议：优先处理 ${strongest}，暂缓高风险决策。`;
   helloText.textContent = `${nameInput.value || "你"}，今日如何？`;
 
   const now = new Date();
@@ -149,13 +195,14 @@ function renderDashboard() {
   progressText.textContent = `${seed % 12}/12`;
   overviewStrip.innerHTML = `
     <div class="ov-item"><span>综合分</span><b>${avg}</b></div>
-    <div class="ov-item"><span>最强维度</span><b>${DIMENSIONS[scores.indexOf(Math.max(...scores))]}</b></div>
+    <div class="ov-item"><span>最强维度</span><b>${strongest}</b></div>
     <div class="ov-item"><span>行动模式</span><b>${avg >= 75 ? "积极推进" : avg >= 60 ? "稳健推进" : "保守收缩"}</b></div>
     <div class="ov-item"><span>真太阳时</span><b>${Math.round((CITY_LONGITUDE[cityInput.value] - 120) * 4)} 分钟</b></div>
   `;
 
   renderPillars(seed);
   renderMetrics(scores);
+  renderEvidence(seed, scores, avg, cityInput.value);
   logActivity(`已更新分析结果（${nameInput.value || "用户"}，${cityInput.value}）`);
 }
 
