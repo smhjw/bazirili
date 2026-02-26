@@ -802,11 +802,18 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
 .dash-title-row h2 {
   margin: 0;
   font-size: clamp(28px, 2.6vw, 42px);
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .date-dot {
@@ -816,6 +823,7 @@ select {
   padding: 6px 10px;
   border-radius: 999px;
   font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .overview-strip {
