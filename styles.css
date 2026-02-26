@@ -733,7 +733,7 @@ body.ready .trend-bar.grow {
 
 .analysis-dashboard {
   display: grid;
-  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(280px, 320px);
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr) minmax(240px, 280px);
   gap: 16px;
   padding: 24px 0 52px;
   align-items: start;
@@ -744,6 +744,7 @@ body.ready .trend-bar.grow {
   display: grid;
   gap: 12px;
   align-content: start;
+  min-width: 0;
 }
 
 .dash-main {
@@ -767,28 +768,62 @@ body.ready .trend-bar.grow {
   margin: 0 0 12px;
 }
 
+.profile-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.profile-head p {
+  margin: 0;
+  color: #a9bedf;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.profile-form {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
 .profile-card label {
   display: grid;
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   color: #d6e3fa;
   font-size: 14px;
+  min-width: 0;
 }
 
 .date-row {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 8px;
+  min-width: 0;
+}
+
+.pair-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
 }
 
 input,
 select {
   height: 42px;
+  width: 100%;
+  min-width: 0;
   border-radius: 10px;
   border: 1px solid rgba(152, 177, 225, 0.26);
   background: rgba(9, 18, 42, 0.95);
   color: #edf3ff;
   padding: 0 10px;
+}
+
+.profile-submit {
+  justify-self: start;
 }
 
 .field-error {
@@ -1190,6 +1225,10 @@ select {
   }
 
   .date-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pair-row {
     grid-template-columns: 1fr;
   }
 

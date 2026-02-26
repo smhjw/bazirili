@@ -31,22 +31,27 @@
   <main class="analysis-dashboard shell">
     <aside class="dash-left" data-reveal>
       <section class="panel panel-data profile-card">
-        <h3>个人档案</h3>
-        <form id="profileForm">
-          <label>姓名<input id="pName" type="text" value="张三" required /></label>
+        <div class="profile-head">
+          <h3>个人档案</h3>
+          <p>仅用于本地规则计算，不上传服务器。</p>
+        </div>
+        <form id="profileForm" class="profile-form">
+          <div class="pair-row">
+            <label>姓名<input id="pName" type="text" value="张三" required /></label>
+            <label>出生时<input id="pTime" type="time" value="10:30" required /></label>
+          </div>
           <div class="date-row">
             <label>出生年<input id="pYear" type="text" inputmode="numeric" maxlength="4" placeholder="1995" required /></label>
             <label>月<input id="pMonth" type="text" inputmode="numeric" maxlength="2" placeholder="08" required /></label>
             <label>日<input id="pDay" type="text" inputmode="numeric" maxlength="2" placeholder="15" required /></label>
           </div>
-          <label>出生时<input id="pTime" type="time" value="10:30" required /></label>
           <label>出生地
             <select id="pCity">
               <option>北京</option><option>上海</option><option>广州</option><option>深圳</option>
               <option>杭州</option><option>成都</option><option>武汉</option><option>西安</option>
             </select>
           </label>
-          <button class="btn btn-primary" type="submit">更新档案</button>
+          <button class="btn btn-primary profile-submit" type="submit">更新档案</button>
           <p id="dateError" class="field-error"></p>
         </form>
       </section>
