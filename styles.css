@@ -155,7 +155,55 @@ body.ready [data-reveal].visible {
 
 .top-actions {
   display: flex;
+  align-items: center;
   gap: 10px;
+}
+
+.quick-menu {
+  position: relative;
+}
+
+.quick-trigger {
+  min-width: 74px;
+}
+
+.quick-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 138px;
+  border-radius: 12px;
+  border: 1px solid rgba(158, 179, 223, 0.28);
+  background: rgba(10, 18, 43, 0.96);
+  box-shadow: 0 16px 40px rgba(3, 7, 20, 0.52);
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 60;
+}
+
+.quick-menu:hover .quick-panel,
+.quick-menu:focus-within .quick-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quick-panel a {
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #cfe0ff;
+  font-size: 13px;
+}
+
+.quick-panel a:hover,
+.quick-panel a.active {
+  background: rgba(83, 208, 216, 0.16);
+  color: #fff;
 }
 
 .btn {

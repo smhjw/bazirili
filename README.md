@@ -6,8 +6,8 @@
 - `index.html`：首页（非对称首屏 + 每日运势卡 + 可信度说明）
 - `analysis.html`：分析页（三栏仪表盘 + 解释依据 + 可下载日报）
 - `features.html`：功能页（核心能力 + 六维评分 + 趋势图 + 方法链路）
-- `about.html`：关于页（品牌故事 + 价值观）
-- `help.html`：帮助中心（FAQ 折叠 + 免责声明）
+- `pages/about.html`：关于页（品牌故事 + 价值观）
+- `pages/help.html`：帮助中心（FAQ 折叠 + 免责声明）
 - `blog.html`：博客页（文章卡片 + 打赏区）
 
 ## 主要功能
