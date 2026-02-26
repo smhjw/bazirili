@@ -1,0 +1,213 @@
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- ============================================ -->
+    <!-- SEO优化 - 基础Meta标签 -->
+    <!-- ============================================ -->
+    
+    <title>命运日历 - 免费八字运势查询_每日运势预测_2025年运势分析</title>
+    <meta name="description" content="命运日历提供免费八字运势查询，每日运势预测，流年运势分析。精准的真太阳时校准，涵盖330+城市。查询事业、财运、桃花、健康运势，助您趋吉避凶。" />
+    <meta name="keywords" content="运势查询,八字算命,每日运势,流年运势,八字排盘,免费算命,运势预测,2025年运势,真太阳时,生辰八字" />
+    <meta name="author" content="命运日历" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    
+    <!-- ============================================ -->
+    <!-- 多语言支持 - hreflang 标签 -->
+    <!-- ============================================ -->
+    
+    <link rel="alternate" hreflang="zh-CN" href="https://fortunecalendar.vercel.app/?lang=zh" />
+    <link rel="alternate" hreflang="en" href="https://fortunecalendar.vercel.app/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://fortunecalendar.vercel.app/?lang=en" />
+    
+    <!-- ============================================ -->
+    <!-- Open Graph (社交媒体分享) -->
+    <!-- ============================================ -->
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="命运日历 - 免费八字运势查询" />
+    <meta property="og:description" content="精准的八字运势预测，每日运势查询，支持330+城市真太阳时校准。" />
+    <meta property="og:url" content="https://fortunecalendar.vercel.app" />
+    <meta property="og:site_name" content="命运日历" />
+    <meta property="og:image" content="https://fortunecalendar.vercel.app/og-image.png" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image:alt" content="Fortune Calendar - Bazi Fortune App" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fortune Calendar - Free Bazi Fortune Reading" />
+    <meta name="twitter:description" content="Accurate Bazi fortune predictions, daily fortune queries, supporting true solar time calibration for 330+ cities." />
+    
+    <!-- ============================================ -->
+    <!-- 字体预加载 (性能优化) -->
+    <!-- ============================================ -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" /></noscript>
+    
+    <!-- ============================================ -->
+    <!-- 关键 CSS 内联 (首屏渲染优化) -->
+    <!-- ============================================ -->
+    
+    <style>
+      /* 关键样式内联，避免闪烁 */
+      :root {
+        --bg-primary: #F5F5F7;
+        --text-primary: #1f2937;
+        --accent-indigo: #6366f1;
+      }
+      
+      /* 骨架屏样式 */
+      .skeleton-pulse {
+        animation: skeleton-pulse 1.5s ease-in-out infinite;
+        background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+        background-size: 200% 100%;
+      }
+      
+      @keyframes skeleton-pulse {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* 初始加载状态 */
+      #root:empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: var(--bg-primary);
+      }
+      
+      #root:empty::after {
+        content: '';
+        width: 40px;
+        height: 40px;
+        border: 3px solid #e5e7eb;
+        border-top-color: var(--accent-indigo);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* 暗色模式支持 */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-primary: #0f172a;
+          --text-primary: #f1f5f9;
+        }
+        
+        .skeleton-pulse {
+          background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+          background-size: 200% 100%;
+        }
+      }
+    </style>
+    
+    <!-- ============================================ -->
+    <!-- 网站图标 -->
+    <!-- ============================================ -->
+    
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://fortunecalendar.vercel.app" />
+    
+    <!-- PWA 相关 -->
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- ============================================ -->
+    <!-- 结构化数据 (Schema.org) -->
+    <!-- ============================================ -->
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "命运日历",
+      "alternateName": "Fortune Calendar",
+      "description": "免费八字运势查询，每日运势预测，流年运势分析",
+      "inLanguage": ["zh-CN", "en"],
+      "url": "https://fortunecalendar.vercel.app",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1250",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Fortune Calendar",
+      "description": "Free Bazi fortune reading, daily fortune predictions, annual cycle analysis",
+      "inLanguage": "en",
+      "url": "https://fortunecalendar.vercel.app/?lang=en",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- Google Analytics (流量分析) -->
+    <!-- ============================================ -->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1X0LY6TCM2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1X0LY6TCM2', {
+        page_path: window.location.pathname,
+        send_page_view: true
+      });
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- Google Ads 转化追踪 (广告效果追踪) -->
+    <!-- ============================================ -->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16806961112"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16806961112');
+    </script>
+    
+    <script type="module" crossorigin src="/assets/js/index-DHrLbE-l.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/rolldown-runtime-DlPSPE1h.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/charts-ilCqDaIu.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/react-vendor-Cuhb2uZV.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/motion-EZkgO193.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/i18n-FuuR_33C.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/index-L_gyY2jc.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

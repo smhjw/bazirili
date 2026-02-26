@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>命运日历 | 功能</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner shell">
+      <a class="logo" href="index.html"><span class="logo-mark">✣</span><span>命运日历</span></a>
+      <nav class="nav">
+        <a href="index.html">首页</a>
+        <a class="active" href="features.html">功能</a>
+        <a href="about.html">关于</a>
+        <a href="help.html">帮助</a>
+        <a href="blog.html">博客</a>
+      </nav>
+      <div class="top-actions"><a class="btn btn-primary" href="analysis.html">进入应用</a><button class="btn btn-ghost">登录</button><button class="btn btn-ghost">中文</button></div>
+    </div>
+  </header>
+
+  <main class="shell sub-page">
+    <section class="page-hero"><p class="crumb">首页 › 功能详情</p><h1>功能详解</h1><p>探索核心能力：每日运势、流年趋势、AI 解释与真太阳时校准。</p></section>
+
+    <section>
+      <h2>核心能力</h2>
+      <div class="feature-grid">
+        <article class="panel feature-item"><h3>每日运势</h3><p>生成当日六维评分与行动建议。</p></article>
+        <article class="panel feature-item"><h3>流年趋势</h3><p>查看未来十年的波动区间，提前规划。</p></article>
+        <article class="panel feature-item"><h3>AI 命理解读</h3><p>把复杂命理信息转为可读文字建议。</p></article>
+      </div>
+    </section>
+
+    <section class="band">
+      <h2>六大维度</h2>
+      <p class="sub">事业、财运、桃花、健康、学业、出行六个维度给出评分与倾向。</p>
+      <div class="metrics" id="dimensionGrid"></div>
+    </section>
+
+    <section class="band">
+      <h2>流年趋势演示</h2>
+      <p class="sub">演示版趋势图用于观察阶段走势。</p>
+      <div id="trendBars" class="trend-bars"></div>
+    </section>
+  </main>
+  <footer class="shell page-footer">© 2026 命运日历 · 功能持续迭代中。</footer>
+
+  <script src="features.js"></script>
+</body>
+</html>
+

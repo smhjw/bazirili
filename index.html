@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>命运日历 | 首页</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner shell">
+      <a class="logo" href="index.html"><span class="logo-mark">✣</span><span>命运日历</span></a>
+      <nav class="nav">
+        <a class="active" href="index.html">首页</a>
+        <a href="features.html">功能</a>
+        <a href="about.html">关于</a>
+        <a href="help.html">帮助</a>
+        <a href="blog.html">博客</a>
+      </nav>
+      <div class="top-actions">
+        <a class="btn btn-primary" href="analysis.html">进入应用</a>
+        <button class="btn btn-ghost" type="button">登录</button>
+        <button class="btn btn-ghost" type="button">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-left">
+        <p class="rating-pill">⭐ 4.9 ｜ 12,847 位用户的信赖</p>
+        <h1>以千年命理智慧<br><span>导航人生</span><br>每一个重要决策</h1>
+        <p class="hero-desc">结合传统命理逻辑与 AI 生成建议，提供更容易执行的每日行动方案。</p>
+        <a class="btn btn-xl btn-primary" href="analysis.html">开始免费分析</a>
+        <ul class="hero-meta">
+          <li>隐私优先</li>
+          <li>30 秒出结果</li>
+          <li>无广告干扰</li>
+        </ul>
+      </div>
+
+      <aside class="hero-card" id="dailyCard">
+        <div class="card-head">
+          <div>
+            <p class="mini-label">今日</p>
+            <p class="date" id="todayDate"></p>
+          </div>
+          <span class="tag">运势更新</span>
+        </div>
+        <div class="radar-wrap">
+          <svg id="radarSvg" viewBox="0 0 240 220" aria-hidden="true"></svg>
+          <div class="score"><b id="totalScore">78</b><small>综合分</small></div>
+        </div>
+        <div class="metrics" id="metrics"></div>
+        <div class="topic" id="topicText"></div>
+      </aside>
+    </section>
+
+    <section class="analysis shell" id="analysis">
+      <div class="panel">
+        <div class="section-title">
+          <h2>八字分析演示</h2>
+          <p>已升级为独立分析页，支持三栏仪表盘与精细日期校验。</p>
+        </div>
+        <a class="btn btn-primary btn-xl" href="analysis.html">进入免费分析页</a>
+      </div>
+    </section>
+
+    <section class="shell info-grid section">
+      <article class="panel mini-card"><h3>每日运势</h3><p>根据时间与地点生成节奏建议，适合日常规划。</p></article>
+      <article class="panel mini-card"><h3>流年趋势</h3><p>模拟未来十年波动，帮助把握长期阶段。</p></article>
+      <article class="panel mini-card"><h3>真太阳时</h3><p>按城市经度修正，提升时刻解释精度。</p></article>
+    </section>
+
+    <section class="shell section cta-band">
+      <div class="panel cta-panel">
+        <h2>准备好探索你的人生路径了吗？</h2>
+        <p>加入更多用户，用更清晰的行动建议替代焦虑与内耗。</p>
+        <a class="btn btn-primary btn-xl" href="analysis.html">开始免费分析</a>
+      </div>
+    </section>
+  </main>
+  <footer class="shell page-footer">© 2026 命运日历 · 每日运势与长期趋势并重。</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
